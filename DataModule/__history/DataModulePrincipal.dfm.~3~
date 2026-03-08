@@ -1,0 +1,112 @@
+object dtmPrincipal: TdtmPrincipal
+  Height = 480
+  Width = 640
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'User_Name=postgres'
+      'Port=5433'
+      'Server=localhost'
+      'Password=1234'
+      'Database=bibliotecadb'
+      'DriverID=PG')
+    Connected = True
+    Left = 280
+    Top = 112
+  end
+  object FDPhysPgDriverLink1: TFDPhysPgDriverLink
+    VendorLib = 'C:\Program Files (x86)\PostgreSQL\psqlODBC\bin\libpq.dll'
+    Left = 112
+    Top = 112
+  end
+  object FDTCliente: TFDTable
+    Active = True
+    IndexFieldNames = 'id'
+    AggregatesActive = True
+    Connection = FDConnection
+    ResourceOptions.AssignedValues = [rvEscapeExpand]
+    Exclusive = True
+    TableName = 'cliente'
+    Left = 408
+    Top = 120
+    object FDTClienteid: TIntegerField
+      FieldName = 'id'
+      Origin = 'id'
+    end
+    object FDTClientenome: TWideStringField
+      FieldName = 'nome'
+      Origin = 'nome'
+      Size = 120
+    end
+    object FDTClientecpf: TWideStringField
+      FieldName = 'cpf'
+      Origin = 'cpf'
+      Size = 14
+    end
+    object FDTClientetelefone: TWideStringField
+      FieldName = 'telefone'
+      Origin = 'telefone'
+    end
+    object FDTClienteemail: TWideStringField
+      FieldName = 'email'
+      Origin = 'email'
+      Size = 255
+    end
+  end
+  object FDTLivro: TFDTable
+    Active = True
+    IndexFieldNames = 'id'
+    AggregatesActive = True
+    Connection = FDConnection
+    ResourceOptions.AssignedValues = [rvEscapeExpand]
+    TableName = 'livro'
+    Left = 480
+    Top = 120
+    object FDTLivroid: TIntegerField
+      FieldName = 'id'
+      Origin = 'id'
+    end
+    object FDTLivrotitulo: TWideStringField
+      FieldName = 'titulo'
+      Origin = 'titulo'
+      Size = 255
+    end
+    object FDTLivroautor: TWideStringField
+      FieldName = 'autor'
+      Origin = 'autor'
+      Size = 120
+    end
+    object FDTLivroeditora: TWideStringField
+      FieldName = 'editora'
+      Origin = 'editora'
+      Size = 80
+    end
+    object FDTLivrocategoria: TWideStringField
+      FieldName = 'categoria'
+      Origin = 'categoria'
+      Size = 50
+    end
+    object FDTLivroquantidade_total: TIntegerField
+      FieldName = 'quantidade_total'
+      Origin = 'quantidade_total'
+    end
+    object FDTLivroquantidade_disponivel: TIntegerField
+      FieldName = 'quantidade_disponivel'
+      Origin = 'quantidade_disponivel'
+    end
+    object FDTLivroidentificacao_isbn: TWideStringField
+      FieldName = 'identificacao_isbn'
+      Origin = 'identificacao_isbn'
+      Size = 17
+    end
+  end
+  object FDTEmprestimo: TFDTable
+    Active = True
+    IndexFieldNames = 'id'
+    AggregatesActive = True
+    Connection = FDConnection
+    ResourceOptions.AssignedValues = [rvEscapeExpand]
+    TableName = 'emprestimo'
+    Left = 408
+    Top = 184
+  end
+end

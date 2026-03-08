@@ -1,0 +1,10 @@
+object dtmPrincipal: TdtmPrincipal
+  Height = 480
+  Width = 640
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'DriverID=PG')
+    Left = 136
+    Top = 80
+  end
+end

@@ -1,0 +1,60 @@
+unit CadastroLivro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask;
+
+type
+  TfrmCadastroLivro = class(TForm)
+    pnlCadastroLivro: TPanel;
+    pnlEscolhas: TPanel;
+    btnConfirmar: TButton;
+    btnCancelar: TButton;
+    lblInformacoes: TLabel;
+    gpnlInfo: TGridPanel;
+    lblQuantidadeDisponível: TLabel;
+    edtQuantidadeDisponivel: TEdit;
+    lblQuantidadeTotal: TLabel;
+    edtQuantidadeTotal: TEdit;
+    lblTitulo: TLabel;
+    edtTitulo: TEdit;
+    GridPanel1: TGridPanel;
+    Label1: TLabel;
+    Edit1: TEdit;
+    Label2: TLabel;
+    Edit2: TEdit;
+    lblCategoria: TLabel;
+    edtCategoria: TEdit;
+    lblISBN: TLabel;
+    Edit3: TEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+    class procedure NovoLivro(pOwner: TComponent);
+  end;
+
+var
+  frmCadastroLivro: TfrmCadastroLivro;
+
+implementation
+
+{$R *.dfm}
+
+{ TForm3 }
+
+class procedure TfrmCadastroLivro.NovoLivro(pOwner: TComponent);
+begin
+  var lfrmCadastroLivro := TfrmCadastroLivro.Create(pOwner);
+
+  try
+    lfrmCadastroLivro.ShowModal;
+  finally
+    lfrmCadastroLivro.Free;
+  end;
+end;
+
+end.

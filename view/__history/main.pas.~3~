@@ -1,0 +1,48 @@
+unit main;
+
+interface
+
+uses
+  ListaLivros,Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.WinXCtrls,
+  Vcl.StdCtrls, System.ImageList, Vcl.ImgList, Vcl.VirtualImageList,
+  Vcl.BaseImageCollection, Vcl.ImageCollection, Vcl.Buttons,
+  Vcl.Imaging.pngimage;
+
+type
+  TBiblioteca = class(TForm)
+    gpnlPrincipal: TGridPanel;
+    Panel3: TPanel;
+    Shape4: TShape;
+    Image4: TImage;
+    Label1: TLabel;
+    Panel2: TPanel;
+    Shape3: TShape;
+    Image3: TImage;
+    Label3: TLabel;
+    Panel1: TPanel;
+    Shape2: TShape;
+    Image2: TImage;
+    Label4: TLabel;
+    Label5: TLabel;
+    procedure Label4Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Biblioteca: TBiblioteca;
+
+implementation
+
+{$R *.dfm}
+
+
+procedure TBiblioteca.Label4Click(Sender: TObject);
+begin
+   frmListaLivros.AbrirListaLivros(self);
+end;
+
+end.
