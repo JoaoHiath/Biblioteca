@@ -10,6 +10,9 @@ object frmListaClientes: TfrmListaClientes
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object pnlControlesLivros: TPanel
     Left = 0
@@ -31,6 +34,7 @@ object frmListaClientes: TfrmListaClientes
       Align = alLeft
       Caption = 'Excluir'
       TabOrder = 0
+      OnClick = btnExcluirClick
     end
     object btnEditar: TButton
       AlignWithMargins = True
@@ -45,6 +49,7 @@ object frmListaClientes: TfrmListaClientes
       Align = alLeft
       Caption = 'Editar'
       TabOrder = 1
+      OnClick = btnEditarClick
     end
     object btnAdicionar: TButton
       AlignWithMargins = True
@@ -62,17 +67,13 @@ object frmListaClientes: TfrmListaClientes
       OnClick = btnAdicionarClick
     end
   end
-  object dbgdLivros: TDBGrid
+  object lstClientes: TListBox
     Left = 0
-    Top = 47
+    Top = 49
     Width = 624
-    Height = 394
-    Align = alBottom
+    Height = 392
+    Align = alClient
+    ItemHeight = 15
     TabOrder = 1
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -12
-    TitleFont.Name = 'Segoe UI'
-    TitleFont.Style = []
   end
 end

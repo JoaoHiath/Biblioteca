@@ -10,28 +10,17 @@ object frmListaLivros: TfrmListaLivros
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
-  object dbgdLivros: TDBGrid
-    Left = 0
-    Top = 47
-    Width = 624
-    Height = 394
-    Align = alBottom
-    DataSource = DataSource1
-    TabOrder = 0
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -12
-    TitleFont.Name = 'Segoe UI'
-    TitleFont.Style = []
-  end
   object pnlControlesLivros: TPanel
     Left = 0
     Top = 0
     Width = 624
     Height = 49
     Align = alTop
-    TabOrder = 1
+    TabOrder = 0
     object btnExcluir: TButton
       AlignWithMargins = True
       Left = 191
@@ -45,6 +34,8 @@ object frmListaLivros: TfrmListaLivros
       Align = alLeft
       Caption = 'Excluir'
       TabOrder = 0
+      OnClick = Excluir
+      ExplicitTop = 9
     end
     object btnEditar: TButton
       AlignWithMargins = True
@@ -59,6 +50,7 @@ object frmListaLivros: TfrmListaLivros
       Align = alLeft
       Caption = 'Editar'
       TabOrder = 1
+      OnClick = btnEditarClick
     end
     object btnAdicionar: TButton
       AlignWithMargins = True
@@ -75,6 +67,15 @@ object frmListaLivros: TfrmListaLivros
       TabOrder = 2
       OnClick = btnAdicionarClick
     end
+  end
+  object lstLivros: TListBox
+    Left = 0
+    Top = 49
+    Width = 624
+    Height = 392
+    Align = alClient
+    ItemHeight = 15
+    TabOrder = 1
   end
   object DataSource1: TDataSource
     DataSet = dtmPrincipal.FDTLivro

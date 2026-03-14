@@ -3,7 +3,7 @@ unit ListaEmprestimos;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  cadastroEmprestimo, Model.Emprestimo, Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
   Vcl.Grids, Vcl.DBGrids;
 
@@ -13,7 +13,11 @@ type
     btnExcluir: TButton;
     btnEditar: TButton;
     btnAdicionar: TButton;
-    dbgdLivros: TDBGrid;
+    lstEmprestimos: TListBox;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnAdicionarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,6 +33,14 @@ implementation
 
 {$R *.dfm}
 
+uses
+
+  Controller.Emprestimo, Factory.Emprestimo;
+
+var
+
+  FController: TEmprestimoController;
+
 class procedure TfrmListaEmprestimos.AbrirListaEmprestimos(pOwner: TComponent);
 begin
   var lfrmListaEmprestimos := TfrmListaEmprestimos.Create(pOwner);
@@ -38,6 +50,26 @@ begin
   finally
     lfrmListaEmprestimos.Free;
   end;
+end;
+
+procedure TfrmListaEmprestimos.btnAdicionarClick(Sender: TObject);
+begin
+  TfrmCadastroEmprestimo.AdicionarEmprestimo(nil);
+end;
+
+procedure TfrmListaEmprestimos.FormCreate(Sender: TObject);
+begin
+  FController := TEmprestimoFactory.criarController(self);
+end;
+
+procedure TfrmListaEmprestimos.FormDestroy(Sender: TObject);
+begin
+  FController.Free;
+end;
+
+procedure TfrmListaEmprestimos.FormShow(Sender: TObject);
+begin
+  FController.ObterEmprestimos(lstEmprestimos);
 end;
 
 end.

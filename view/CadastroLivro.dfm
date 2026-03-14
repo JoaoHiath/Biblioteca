@@ -10,6 +10,8 @@
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object pnlCadastroLivro: TPanel
     Left = 0
@@ -25,14 +27,14 @@
       Height = 28
       Align = alTop
       Alignment = taCenter
-      Caption = 'Informa'#231#245'es do cliente'
+      Caption = 'Informa'#231#245'es do livro'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -20
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 198
+      ExplicitWidth = 180
     end
     object lblTitulo: TLabel
       AlignWithMargins = True
@@ -100,6 +102,7 @@
       Width = 622
       Height = 80
       Align = alTop
+      BevelOuter = bvNone
       ColumnCollection = <
         item
           Value = 50.000000000000000000
@@ -138,10 +141,10 @@
       TabOrder = 0
       object lblQuantidadeDisponível: TLabel
         AlignWithMargins = True
-        Left = 11
-        Top = 6
+        Left = 10
+        Top = 5
         Width = 150
-        Height = 29
+        Height = 30
         Margins.Left = 10
         Margins.Top = 5
         Margins.Bottom = 5
@@ -157,10 +160,10 @@
       end
       object edtQuantidadeDisponivel: TEdit
         AlignWithMargins = True
-        Left = 11
+        Left = 10
         Top = 45
         Width = 80
-        Height = 29
+        Height = 30
         Margins.Left = 10
         Margins.Top = 5
         Margins.Bottom = 5
@@ -177,9 +180,9 @@
       object lblQuantidadeTotal: TLabel
         AlignWithMargins = True
         Left = 321
-        Top = 6
+        Top = 5
         Width = 113
-        Height = 29
+        Height = 30
         Margins.Left = 10
         Margins.Top = 5
         Margins.Bottom = 5
@@ -198,7 +201,7 @@
         Left = 321
         Top = 45
         Width = 80
-        Height = 29
+        Height = 30
         Margins.Left = 10
         Margins.Top = 5
         Margins.Bottom = 5
@@ -238,6 +241,7 @@
       Width = 622
       Height = 80
       Align = alTop
+      BevelOuter = bvNone
       ColumnCollection = <
         item
           Value = 50.000000000000000000
@@ -248,22 +252,22 @@
       ControlCollection = <
         item
           Column = 0
-          Control = Label1
+          Control = lblAutor
           Row = 0
         end
         item
           Column = 0
-          Control = Edit1
+          Control = edtAutor
           Row = 1
         end
         item
           Column = 1
-          Control = Label2
+          Control = lblEditora
           Row = 0
         end
         item
           Column = 1
-          Control = Edit2
+          Control = edtEditora
           Row = 1
         end>
       RowCollection = <
@@ -274,12 +278,12 @@
           Value = 50.000000000000000000
         end>
       TabOrder = 2
-      object Label1: TLabel
+      object lblAutor: TLabel
         AlignWithMargins = True
-        Left = 11
-        Top = 6
+        Left = 10
+        Top = 5
         Width = 37
-        Height = 29
+        Height = 30
         Margins.Left = 10
         Margins.Top = 5
         Margins.Bottom = 5
@@ -293,12 +297,12 @@
         ParentFont = False
         ExplicitHeight = 20
       end
-      object Edit1: TEdit
+      object edtAutor: TEdit
         AlignWithMargins = True
-        Left = 11
+        Left = 10
         Top = 45
         Width = 270
-        Height = 29
+        Height = 30
         Margins.Left = 10
         Margins.Top = 5
         Margins.Bottom = 5
@@ -312,12 +316,12 @@
         TabOrder = 0
         ExplicitHeight = 28
       end
-      object Label2: TLabel
+      object lblEditora: TLabel
         AlignWithMargins = True
         Left = 321
-        Top = 6
+        Top = 5
         Width = 48
-        Height = 29
+        Height = 30
         Margins.Left = 10
         Margins.Top = 5
         Margins.Bottom = 5
@@ -331,12 +335,12 @@
         ParentFont = False
         ExplicitHeight = 20
       end
-      object Edit2: TEdit
+      object edtEditora: TEdit
         AlignWithMargins = True
         Left = 321
         Top = 45
         Width = 272
-        Height = 29
+        Height = 30
         Margins.Left = 10
         Margins.Top = 5
         Margins.Bottom = 5
@@ -370,7 +374,7 @@
       ParentFont = False
       TabOrder = 3
     end
-    object Edit3: TEdit
+    object edtISBN: TEdit
       AlignWithMargins = True
       Left = 11
       Top = 360
@@ -418,6 +422,7 @@
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      OnClick = btnConfirmarClick
     end
     object btnCancelar: TButton
       AlignWithMargins = True
