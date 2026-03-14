@@ -1,0 +1,71 @@
+unit Repository.Cliente;
+
+interface
+
+uses
+
+  Data.DB, DataModulePrincipal, Generics.Collections,Model.Cliente, System.Classes;
+
+type
+
+ IClienteRepository = interface
+
+   function ObterClientes: TObjectList <TClienteModel>;
+   procedure Salvar (Cliente: TClienteModel);
+   procedure Excluir (id: integer);
+ end;
+
+ TClienteRepository = class (TInterfacedObject, IClienteRepository)
+   public
+     function ObterClientes: TObjectList <TClienteModel>;
+     procedure Salvar (Cliente: TClienteModel);
+     procedure Excluir (id: integer);
+
+ end;
+
+implementation
+
+function TClienteRepository.ObterClientes: TObjectList <TClienteModel>;
+begin
+  Result := TObjectList<TClienteModel>.Create;
+
+  dtmPrincipal.FDTCliente.First;
+
+  while not dtmPrincipal.FDTCliente.Eof do
+  begin
+    var Cliente := TClienteModel.Create;
+
+    Cliente.id := dtmPrincipal.FDTClienteid.AsInteger;
+    Cliente.Nome := dtmPrincipal.FDTClientenome.AsString;
+    Cliente.Cpf := dtmPrincipal.FDTClientecpf.AsString;
+    Cliente.Telefone := dtmPrincipal.FDTClientetelefone.AsString;
+    Cliente.Email := dtmPrincipal.FDTClienteemail.AsString;
+
+    Result.Add(Cliente);
+
+    dtmPrincipal.FDTCliente.Next;
+  end;
+end;
+
+procedure TClienteRepository.Salvar (Cliente: TClienteModel);
+begin
+  if dtmPrincipal.FDTCliente.Locate('id', Cliente.id, []) then
+    dtmPrincipal.FDTCliente.Edit
+  else
+  dtmPrincipal.FDTCliente.Append;
+
+  dtmPrincipal.FDTClientenome.AsString := Cliente.Nome;
+  dtmPrincipal.FDTClientecpf.AsString := Cliente.Cpf;
+  dtmPrincipal.FDTClientetelefone.AsString := Cliente.Telefone;
+  dtmPrincipal.FDTClienteemail.AsString := Cliente.Email;
+
+  Cliente.id := dtmPrincipal.FDTClienteid.AsInteger;
+end;
+
+procedure TClienteRepository.Excluir (id: integer);
+begin
+  if dtmPrincipal.FDTCliente.Locate('id', id, []) then
+    dtmPrincipal.FDTCliente.Delete;
+
+end;
+end.

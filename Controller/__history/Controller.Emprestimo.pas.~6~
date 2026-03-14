@@ -1,0 +1,79 @@
+unit Controller.Emprestimo;
+
+interface
+
+
+uses
+
+  ListaEmprestimos, Model.Emprestimo, Service.Emprestimo, System.Classes, System.SysUtils, System.Threading, Vcl.Dialogs;
+
+type
+
+  TEmprestimoController = class
+
+    private
+
+    FOwner: TfrmListaEmprestimos;
+    FService: IEmprestimoService;
+
+    public
+
+    constructor Create(Owner: TfrmListaEmprestimos; Service: IEmprestimoService);
+    procedure ObterEmprestimos;
+    procedure Salvar (Emprestimo: TEmprestimoModel);
+    procedure Excluir (id: integer);
+
+  end;
+
+implementation
+
+{ TClienteController }
+
+constructor TEmprestimoController.Create(Owner: TfrmListaEmprestimos;
+  Service: IEmprestimoService);
+begin
+    FOwner:= Owner;
+  FService:= Service;
+end;
+
+procedure TEmprestimoController.ObterEmprestimos;
+begin
+  TTask.Run(
+    procedure
+    begin
+      try
+        var Emprestimo := FService.ObterEmprestimo;
+        TThread.Synchronize(nil,
+        procedure
+        begin
+          FOwner.lstEmprestimos.Clear;
+          for var Emprestimo in Emprestimo do
+          begin
+            FOwner.lstEmprestimos.AddItem(DateToStr(Emprestimo.DataEmprestimo),Emprestimo);
+          end;
+        end
+        );
+      except
+        on E: exception do
+          TThread.Synchronize(nil,
+          procedure
+          begin
+            ShowMessage('Erro: ' + E.Message);
+          end
+          );
+      end;
+    end
+  )
+end;
+
+procedure TEmprestimoController.Salvar(Emprestimo: TEmprestimoModel);
+begin
+  FService.Salvar(Emprestimo);
+end;
+
+procedure TEmprestimoController.Excluir(id: integer);
+begin
+  FService.Excluir(id);
+end;
+
+end.

@@ -1,0 +1,79 @@
+unit Controller.Cliente;
+
+interface
+
+uses
+
+  Vcl.Controls, ListaClientes, Model.Cliente, Service.Cliente, System.Classes, System.SysUtils, System.Threading, Vcl.Dialogs;
+
+type
+
+  TClienteController = class
+
+    private
+
+    FOwner: TComponent;
+    FService: IClienteService;
+
+    public
+
+    constructor Create(Owner: TComponent; Service: IClienteService);
+    procedure ObterClientes(pLista: TCustomListControl);
+    procedure Salvar (Cliente: TClienteModel);
+    procedure Excluir (id: integer);
+
+  end;
+
+implementation
+
+{ TClienteController }
+
+constructor TClienteController.Create(Owner: TComponent;
+  Service: IClienteService);
+begin
+  FOwner:= Owner;
+  FService:= Service;
+end;
+
+procedure TClienteController.ObterClientes(pLista: TCustomListControl);
+begin
+
+  TTask.Run(
+    procedure
+    begin
+      try
+        var Cliente := FService.ObterClientes;
+        TThread.Synchronize(nil,
+        procedure
+        begin
+          pLista.Clear;
+          for var Cliente in Cliente do
+          begin
+            pLista.AddItem(Cliente.Nome,Cliente);
+          end;
+        end
+        );
+      except
+        on E: exception do
+          TThread.Synchronize(nil,
+          procedure
+          begin
+            ShowMessage('Erro: ' + E.Message);
+          end
+          );
+      end;
+    end
+  )
+end;
+
+procedure TClienteController.Salvar(Cliente: TClienteModel);
+begin
+  FService.Salvar(Cliente);
+end;
+
+procedure TClienteController.Excluir(id: integer);
+begin
+  FService.Excluir(id);
+end;
+
+end.

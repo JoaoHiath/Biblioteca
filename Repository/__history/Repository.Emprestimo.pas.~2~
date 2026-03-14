@@ -11,15 +11,15 @@ type
  IEmprestimoRepository = interface
 
    function ObterEmprestimos: TObjectList <TEmprestimoModel>;
-   procedure RealizarEmprestimo (Emprestimo: TEmprestimoModel);
+   procedure Salvar (Emprestimo: TEmprestimoModel);
    procedure Excluir (id: integer);
  end;
 
  TEmprestimoRepository = class (TInterfacedObject, IEmprestimoRepository)
    public
      function ObterEmprestimos: TObjectList <TEmprestimoModel>;
-     procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel);
-     procedure Excluir (pId: integer);
+     procedure Salvar (Emprestimo: TEmprestimoModel);
+     procedure Excluir (id: integer);
 
  end;
 
@@ -48,29 +48,33 @@ begin
 
       Result.Add(Emprestimo);
 
-      dtmPrincipal.FDTEmprestimo.Next;
+      dtmPrincipal.FDTCliente.Next;
     end;
 
 end;
 
-procedure TEmprestimoRepository.RealizarEmprestimo(pEmprestimo: TEmprestimoModel);
+procedure TEmprestimoRepository.Salvar(Emprestimo: TEmprestimoModel);
 begin
+    if dtmPrincipal.FDTEmprestimo.Locate('id', Emprestimo.id, []) then
+      dtmPrincipal.FDTEmprestimo.Edit
+    else
     dtmPrincipal.FDTEmprestimo.Append;
 
-    dtmPrincipal.FDTEmprestimoid_livro.AsInteger := pEmprestimo.IdLivro;
-    dtmPrincipal.FDTEmprestimoid_cliente.AsInteger := pEmprestimo.IdCliente;
-    dtmPrincipal.FDTEmprestimodata_devolucao.AsDateTime := pEmprestimo.DataDevolucao;
-    dtmPrincipal.FDTEmprestimodata_emprestimo.AsDateTime := pEmprestimo.DataEmprestimo;
-    dtmPrincipal.FDTEmprestimodata_prevista_devolucao.AsDateTime := pEmprestimo.DataPrevistaDevolucao;
-    dtmPrincipal.FDTEmprestimostatus.AsString := pEmprestimo.Status;
+    dtmPrincipal.FDTEmprestimoid_livro.AsInteger := Emprestimo.IdLivro;
+    dtmPrincipal.FDTEmprestimoid_cliente.AsInteger := Emprestimo.IdCliente;
+    dtmPrincipal.FDTEmprestimodata_devolucao.AsDateTime := Emprestimo.DataDevolucao;
+    dtmPrincipal.FDTEmprestimodata_emprestimo.AsDateTime := Emprestimo.DataEmprestimo;
+    dtmPrincipal.FDTEmprestimodata_prevista_devolucao.AsDateTime := Emprestimo.DataPrevistaDevolucao;
+    dtmPrincipal.FDTEmprestimostatus.AsString := Emprestimo.Status;
 
-    pEmprestimo.id := dtmPrincipal.FDTEmprestimoid.AsInteger;
+    Emprestimo.id := dtmPrincipal.FDTEmprestimoid.AsInteger;
+
 end;
 
-procedure TEmprestimoRepository.Excluir(pId: integer);
+procedure TEmprestimoRepository.Excluir(id: integer);
 begin
 
-  if dtmPrincipal.FDTEmprestimo.Locate('id', pId, []) then
+  if dtmPrincipal.FDTEmprestimo.Locate('id', id, []) then
     dtmPrincipal.FDTEmprestimo.Delete;
 
 end;

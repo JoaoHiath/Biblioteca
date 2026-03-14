@@ -1,0 +1,20 @@
+unit Factory.Livro;
+
+interface
+
+uses
+
+  Controller.Livro, Service.Livro, Repository.Livro, ListaLivro;
+
+type
+
+  TClienteFactory = class
+    public
+    class function criarController(owner: TfrmListaLivros): TLivroController;
+    class function criarService: ILivroService;
+    class function criarRepository: ILivroRepository;
+  end;
+
+implementation
+
+end.

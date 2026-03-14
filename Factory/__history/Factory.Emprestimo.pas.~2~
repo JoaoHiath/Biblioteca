@@ -1,0 +1,20 @@
+unit Factory.Emprestimo;
+
+interface
+
+uses
+
+  Controller.Emprestimo, Service.Emprestimo, Repository.Emprestimo, ListaEmprestimo;
+
+type
+
+  TEmprestimoFactory = class
+    public
+    class function criarController(owner: TfrmListaEmprestimos): TEmprestimoController;
+    class function criarService: IEmprestimoService;
+    class function criarRepository: IEmprestimoRepository;
+  end;
+
+implementation
+
+end.

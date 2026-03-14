@@ -1,0 +1,36 @@
+unit Factory.Cliente;
+
+interface
+
+uses
+
+  Controller.Cliente, Service.Cliente, Repository.Clientes, ListaClientes;
+
+type
+
+  TclienteFactory = class
+    public
+    class function criarController(owner: TListaClientes):TClientesController;
+    class procedure criarService;
+    class procedure criarRepository;
+  end;
+implementation
+
+{ TclienteFactory }
+
+class procedure TclienteFactory.criarController;
+begin
+
+end;
+
+class procedure TclienteFactory.criarRepository;
+begin
+
+end;
+
+class procedure TclienteFactory.criarService;
+begin
+
+end;
+
+end.

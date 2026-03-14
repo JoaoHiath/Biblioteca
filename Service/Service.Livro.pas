@@ -2,6 +2,70 @@ unit Service.Livro;
 
 interface
 
+uses
+  System.SysUtils,
+  Generics.Collections,Model.Livro, Repository.Livro;
+
+type
+
+ ILivroService = interface
+
+   function Obterlivros: TObjectList <TLivroModel>;
+   procedure Salvar (Livro: TLivroModel);
+   procedure Excluir (id: integer);
+ end;
+
+ TLivroService = class (TInterfacedObject, ILivroService)
+   Private
+   FRepository: ILivroRepository;
+   procedure Validar(livro: TLivroModel);
+
+   public
+     constructor Create(repository: ILivroRepository);
+     function Obterlivros: TObjectList <TLivroModel>;
+     procedure Salvar (Livro: TLivroModel);
+     procedure Excluir (id: integer);
+ end;
+
 implementation
+
+{ TLivroService }
+
+constructor TLivroService.Create(repository: ILivroRepository);
+begin
+  FRepository := repository;
+end;
+
+
+function TLivroService.Obterlivros: TObjectList<TLivroModel>;
+begin
+  Result := FRepository.Obterlivros;
+end;
+
+procedure TLivroService.Salvar(Livro: TLivroModel);
+begin
+  Validar(Livro);
+
+  FRepository.Salvar(Livro);
+end;
+
+procedure TLivroService.Validar(livro: TLivroModel);
+begin
+  if livro.Titulo = '' then
+    raise Exception.Create('Preencha o título do livro.');
+  if Livro.Autor = '' then
+    raise Exception.Create('Preencha o nome do autor do livro.');
+  if Livro.categoria = '' then
+    raise Exception.Create('Preencha a categoria do livro.');
+  if Livro.QuantidadeTotal = 0 then
+    raise Exception.Create('Preencha a quantidade total de exemplares do livro.');
+  if Livro.QuantidadeDisponivel = 0 then
+    raise Exception.Create('Preencha a quantidade disponível de exemplares do livro.');
+end;
+
+procedure TLivroService.Excluir(id: integer);
+begin
+  FRepository.Excluir(id);
+end;
 
 end.

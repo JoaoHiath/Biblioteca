@@ -1,0 +1,36 @@
+unit Service.Cliente;
+
+interface
+
+uses
+  System.SysUtils,
+  Generics.Collections,Model.Cliente, Repository.Cliente;
+
+type
+
+ IClienteService = interface
+
+   function ObterClientes: TObjectList <TClienteModel>;
+   procedure Salvar (Cliente: TClienteModel);
+   procedure Excluir (id: integer);
+ end;
+
+ TClienteService = class (TInterfacedObject, IClienteService)
+   private
+
+   FRepository: IClienteService;
+   procedure Validar(Cliente: TClienteModel);
+
+   public
+
+     constructor Create(repository: IClienteRepository);
+     function ObterClientes: TObjectList <TClienteModel>;
+     procedure Salvar (Cliente: TClienteModel);
+     procedure Excluir (id: integer);
+
+ end;
+
+
+implementation
+
+end.

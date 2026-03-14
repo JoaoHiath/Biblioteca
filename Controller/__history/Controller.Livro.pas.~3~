@@ -1,0 +1,53 @@
+unit Controller.Livro;
+
+interface
+
+uses
+
+  ListaLivros, Model.Livro, Service.Livro, System.Classes, System.SysUtils, System.Threading, Vcl.Dialogs;
+
+type
+
+  TLivroController = class
+
+    private
+
+    FOwner: TfrmListaLivro;
+    FService: ILivroService;
+
+    public
+
+    constructor Create(Owner: TfrmListaLivro; Service: ILivroService);
+    procedure ObterLivros;
+    procedure Salvar (Livro: TClienteModel);
+    procedure Excluir (id: integer);
+
+  end;
+
+implementation
+
+{ TLivroController }
+
+constructor TLivroController.Create(Owner: TfrmListaLivro;
+  Service: ILivroService);
+begin
+  FOwner:= Owner;
+  FService:= Service;
+end;
+
+procedure TLivroController.Excluir(id: integer);
+begin
+
+end;
+
+procedure TLivroController.ObterLivros;
+begin
+
+end;
+
+procedure TLivroController.Salvar(Livro: TClienteModel);
+begin
+
+end;
+
+end.

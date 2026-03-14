@@ -1,0 +1,23 @@
+unit Controller.Clientes;
+
+interface
+
+uses
+
+  TelaPrincipal, Model.Cliente, Service.Cliente, System.Classes, System.SysUtils, System.Threading, Vcl.Dialogs;
+
+type
+
+  TClienteController = class
+
+    private
+
+    FOwner: Tfrm
+
+    public
+
+  end;
+
+implementation
+
+end.

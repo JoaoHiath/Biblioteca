@@ -55,6 +55,9 @@ end;
 
 procedure TEmprestimoRepository.RealizarEmprestimo(pEmprestimo: TEmprestimoModel);
 begin
+    if dtmPrincipal.FDTEmprestimo.Locate('id', pEmprestimo.id, []) then
+      dtmPrincipal.FDTEmprestimo.Edit
+    else
     dtmPrincipal.FDTEmprestimo.Append;
 
     dtmPrincipal.FDTEmprestimoid_livro.AsInteger := pEmprestimo.IdLivro;

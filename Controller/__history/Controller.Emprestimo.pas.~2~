@@ -1,0 +1,30 @@
+unit Controller.Emprestimo;
+
+interface
+
+
+uses
+
+  ListaEmprestimos, Model.Emprestimo, Service.Emprestimo, System.Classes, System.SysUtils, System.Threading, Vcl.Dialogs;
+
+type
+
+  TClienteController = class
+
+    private
+
+    FOwner: TfrmListaEmprestimo;
+    FService: IEmprestimoService;
+
+    public
+
+    constructor Create(Owner: TfrmListaEmprestimo; Service: IEmprestimoService);
+    procedure ObterEmprestimos;
+    procedure Salvar (Emprestimo: TEmprestimoModel);
+    procedure Excluir (id: integer);
+
+  end;
+
+implementation
+
+end.

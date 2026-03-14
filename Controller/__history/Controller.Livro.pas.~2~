@@ -1,0 +1,29 @@
+unit Controller.Livro;
+
+interface
+
+uses
+
+  ListaLivros, Model.Livro, Service.Livro, System.Classes, System.SysUtils, System.Threading, Vcl.Dialogs;
+
+type
+
+  TClienteController = class
+
+    private
+
+    FOwner: TfrmListaClientes;
+    FService: IClienteService;
+
+    public
+
+    constructor Create(Owner: TfrmListaClientes; Service: IClienteService);
+    procedure ObterClientes;
+    procedure Salvar (Cliente: TClienteModel);
+    procedure Excluir (id: integer);
+
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,44 @@
+unit Factory.Cliente;
+
+interface
+
+uses
+
+  Controller.Cliente, Service.Cliente, Repository.Cliente, ListaClientes;
+
+type
+
+  TClienteFactory = class
+    public
+    class function criarController(owner: TfrmListaClientes): TClienteController;
+    class function criarService: IClienteService;
+    class function criarRepository: IClienteRepository;
+  end;
+
+implementation
+
+{ TclienteFactory }
+
+{ TClienteFactory }
+
+class function TClienteFactory.criarController(
+  owner: TfrmListaClientes): TClienteController;
+begin
+  var Service:= CriarService;
+
+  Result := TClienteController.Create(owner, service);
+end;
+
+class function TClienteFactory.criarRepository: IClienteRepository;
+begin
+  Result := TClienteRepository.Create;
+end;
+
+class function TClienteFactory.criarService: IClienteService;
+begin
+  var Repository:= CriarRepository;
+
+  Result:= TClienteService.Create(Repository);
+end;
+
+end.

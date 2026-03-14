@@ -1,0 +1,68 @@
+unit Service.Emprestimo;
+
+interface
+
+uses
+  System.SysUtils,
+  Generics.Collections,Model.Emprestimo, Repository.Emprestimo;
+
+type
+
+ IEmprestimoService = interface
+
+   function ObterEmprestimo: TObjectList <TEmprestimoModel>;
+   procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel);
+   procedure Excluir (id: integer);
+ end;
+
+ TEmprestimoService = class (TInterfacedObject, IEmprestimoService)
+   Private
+   FRepository: IEmprestimoRepository;
+   procedure Validar(pEmprestimo: TEmprestimoModel);
+
+   public
+     constructor Create(repository: IEmprestimoRepository);
+     function ObterEmprestimo: TObjectList <TEmprestimoModel>;
+     procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel);
+     procedure Excluir (id: integer);
+ end;
+
+implementation
+
+{ TEmprestimoService }
+
+constructor TEmprestimoService.Create(repository: IEmprestimoRepository);
+begin
+  FRepository := repository;
+end;
+
+function TEmprestimoService.ObterEmprestimo: TObjectList<TEmprestimoModel>;
+begin
+  Result := FRepository.ObterEmprestimos;
+end;
+
+procedure TEmprestimoService.RealizarEmprestimo(pEmprestimo: TEmprestimoModel);
+begin
+  Validar(pEmprestimo);
+
+   FRepository.RealizarEmprestimo(pEmprestimo);
+end;
+
+procedure TEmprestimoService.Excluir(id: integer);
+begin
+  FRepository.Excluir(id);
+end;
+
+procedure TEmprestimoService.Validar(pEmprestimo: TEmprestimoModel);
+begin
+  if pEmprestimo.IdLivro = 0 then
+    raise Exception.Create('Preencha qual livro será emprestado.');
+  if pEmprestimo.IdCliente = 0 then
+    raise Exception.Create('Preencha para quem o livro será emprestado.');
+  if pEmprestimo.DataEmprestimo = 0 then
+    raise Exception.Create('Preencha a data de quando o livro foi  emprestado.');
+  if pEmprestimo.DataPrevistaDevolucao = 0 then
+    raise Exception.Create('Informe para qual data o livro deve ser devolvido');
+end;
+
+end.

@@ -1,0 +1,59 @@
+unit Controller.Clientes;
+
+interface
+
+uses
+
+  ListaClientes, Model.Cliente, Service.Cliente, System.Classes, System.SysUtils, System.Threading, Vcl.Dialogs;
+
+type
+
+  TClienteController = class
+
+    private
+
+    FOwner: TfrmListaLivros;
+    FService: IClienteService;
+
+    public
+
+    constructor Create(Owner: TfrmListaLivros; Service: IClienteService);
+    procedure ObterClientes;
+    procedure Salvar (Cliente: TClienteModel);
+    procedure Excluir (id: integer);
+
+  end;
+
+implementation
+
+{ TClienteController }
+
+constructor TClienteController.Create(Owner: TfrmListaLivros;
+  Service: IClienteService);
+begin
+
+end;
+
+procedure TClienteController.Excluir(id: integer);
+begin
+
+end;
+
+procedure TClienteController.ObterClientes;
+begin
+  TTask.Run(
+    procedure
+    begin
+      FOwner.lstLivros.Clear
+      for var  := Low to High do
+
+    end
+  )
+end;
+
+procedure TClienteController.Salvar(Cliente: TClienteModel);
+begin
+
+end;
+
+end.

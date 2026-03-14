@@ -1,0 +1,11 @@
+unit Repository.Cliente;
+
+interface
+
+uses
+
+  Data.DB, DataModulePrincipal, Model.Cliente, System.Classes;
+
+implementation
+
+end.

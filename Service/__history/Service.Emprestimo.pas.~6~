@@ -1,0 +1,76 @@
+unit Service.Emprestimo;
+
+interface
+
+uses
+  Repository.Livro, System.SysUtils,
+  Generics.Collections,Model.Emprestimo, Model.Livro, Repository.Emprestimo;
+
+type
+
+ IEmprestimoService = interface
+
+   function ObterEmprestimo: TObjectList <TEmprestimoModel>;
+   procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
+   procedure Excluir (id: integer);
+ end;
+
+ TEmprestimoService = class (TInterfacedObject, IEmprestimoService)
+   Private
+   FRepositoryEmprestimo: IEmprestimoRepository;
+   FRepositoryLivro: ILivroRepository;
+   procedure Validar(pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
+
+   public
+     constructor Create(pEmprestimoRepository: IEmprestimoRepository; pLivroRepository: ILivroRepository);
+     function ObterEmprestimo: TObjectList <TEmprestimoModel>;
+     procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
+     procedure Excluir (id: integer);
+ end;
+
+implementation
+
+{ TEmprestimoService }
+
+constructor TEmprestimoService.Create(pEmprestimoRepository: IEmprestimoRepository; pLivroRepository: ILivroRepository);
+begin
+  FRepositoryEmprestimo := pEmprestimoRepository;
+  FRepositoryLivro := pLivroRepository;
+end;
+
+function TEmprestimoService.ObterEmprestimo: TObjectList<TEmprestimoModel>;
+begin
+  Result := FRepositoryEmprestimo.ObterEmprestimos;
+end;
+
+procedure TEmprestimoService.RealizarEmprestimo(pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
+begin
+  Validar(pEmprestimo, pLivro);
+
+  pLivro.QuantidadeDisponivel := pLivro.QuantidadeDisponivel - 1;
+  FRepositoryLivro.Salvar(pLivro);
+  FRepositoryEmprestimo.RealizarEmprestimo(pEmprestimo);
+end;
+
+procedure TEmprestimoService.Excluir(id: integer);
+begin
+  FRepositoryEmprestimo.Excluir(id);
+end;
+
+procedure TEmprestimoService.Validar(pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
+begin
+  if pEmprestimo.IdLivro = 0 then
+    raise Exception.Create('Preencha qual livro será emprestado.');
+  if pEmprestimo.IdCliente = 0 then
+    raise Exception.Create('Preencha para quem o livro será emprestado.');
+  if pEmprestimo.DataEmprestimo = 0 then
+    raise Exception.Create('Preencha a data de quando o livro foi  emprestado.');
+  if pEmprestimo.DataPrevistaDevolucao = 0 then
+    raise Exception.Create('Informe para qual data o livro deve ser devolvido.');
+  if pLivro.QuantidadeTotal < pLivro.QuantidadeDisponivel then
+    raise Exception.Create('A quantidade de livros disponíveis excede a quantidade de livros totais.');
+  if pLivro.QuantidadeDisponivel < 0 then
+    raise Exception.Create('O livro não tem exemplares disponíveis.');
+end;
+
+end.

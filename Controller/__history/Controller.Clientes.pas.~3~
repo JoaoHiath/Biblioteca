@@ -1,0 +1,29 @@
+unit Controller.Clientes;
+
+interface
+
+uses
+
+  TelaPrincipal, Model.Cliente, Service.Cliente, System.Classes, System.SysUtils, System.Threading, Vcl.Dialogs;
+
+type
+
+  TClienteController = class
+
+    private
+
+    FOwner: TfrmTelaPrincipal;
+    FService: IClienteService;
+
+    public
+
+    constructor Create(Owner: TfrmTelaPrincipal; Service: IClienteService);
+    procedure ObterClientes;
+    procedure Salvar (Cliente: TClienteModel);
+    procedure Excluir (id: integer);
+
+  end;
+
+implementation
+
+end.
