@@ -75,5 +75,9 @@ object frmListaClientes: TfrmListaClientes
     Align = alClient
     ItemHeight = 15
     TabOrder = 1
+    ExplicitLeft = 55
+    ExplicitTop = 96
+    ExplicitWidth = 121
+    ExplicitHeight = 97
   end
 end

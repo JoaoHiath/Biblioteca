@@ -263,6 +263,7 @@ object frmCadastroCliente: TfrmCadastroCliente
       ParentFont = False
       TabOrder = 0
       OnClick = btnConfirmarClickAdicionar
+      ExplicitTop = 7
     end
     object btnCancelar: TButton
       AlignWithMargins = True
