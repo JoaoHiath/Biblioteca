@@ -23,8 +23,6 @@ type
     procedure ObterEmprestimos(pLista: TCustomListControl);
     procedure ObterEmprestimosFiltroLivro(pLista: TCustomListControl; pIdLivro: string; pStatus: string);
     procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
-    procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-    procedure renovarLivro(pEmprestimo: TEmprestimoModel);
     procedure Excluir (pId: integer);
 
   end;
@@ -50,7 +48,7 @@ begin
     for var Emprestimo in Emprestimos do
     begin
       var Cliente := FServiceCliente.ObterClienteId(Emprestimo.IdCliente);
-      pLista.AddItem(' Cliente: ' + Cliente.Nome + ' Entrega: ' + DateToStr(Emprestimo.DataPrevistaDevolucao),Emprestimo);
+      pLista.AddItem(' Cliente: ' + Cliente.Nome + ' Entrega: ' + DateToStr(Emprestimo.DataEmprestimo),Emprestimo);
     end;
 
   except
@@ -68,7 +66,7 @@ begin
     for var Emprestimo in Emprestimos do
     begin
       var Cliente := FServiceCliente.ObterClienteId(Emprestimo.IdCliente);
-      pLista.AddItem(' Cliente: ' + Cliente.Nome + ' Entrega: ' + DateToStr(Emprestimo.DataPrevistaDevolucao),Emprestimo);
+      pLista.AddItem(' Cliente: ' + Cliente.Nome + ' Entrega: ' + DateToStr(Emprestimo.DataEmprestimo),Emprestimo);
     end;
 
   except
@@ -80,16 +78,6 @@ end;
 procedure TEmprestimoController.RealizarEmprestimo(pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
 begin
   FServiceEmprestimo.RealizarEmprestimo(pEmprestimo, pLivro);
-end;
-
-procedure TEmprestimoController.renovarLivro(pEmprestimo: TEmprestimoModel);
-begin
-  FServiceEmprestimo.RenovarLivro(pEmprestimo);
-end;
-
-procedure TEmprestimoController.DevolverLivro(pEmprestimo: TEmprestimoModel);
-begin
-  FServiceEmprestimo.DevolverLivro(pEmprestimo);
 end;
 
 procedure TEmprestimoController.Excluir(pId: integer);

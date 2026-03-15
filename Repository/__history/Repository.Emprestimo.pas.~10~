@@ -4,7 +4,7 @@ interface
 
 uses
 
-  System.SysUtils, Data.DB, DataModulePrincipal, Generics.Collections,Model.Emprestimo, System.Classes;
+  Data.DB, DataModulePrincipal, Generics.Collections,Model.Emprestimo, System.Classes;
 
 type
 
@@ -12,19 +12,15 @@ type
 
    function ObterEmprestimos: TObjectList <TEmprestimoModel>;
    procedure RealizarEmprestimo (Emprestimo: TEmprestimoModel);
-   function ObterEmprestimosFiltroLivro(pIdLivro: string; pStatus: string): TObjectList <TEmprestimoModel>;
-   procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-   procedure RenovarLivro(pEmprestimo: TEmprestimoModel);
+   function ObterEmprestimosFiltroLivro(pIdLivro: string): TObjectList <TEmprestimoModel>;
    procedure Excluir (id: integer);
  end;
 
  TEmprestimoRepository = class (TInterfacedObject, IEmprestimoRepository)
    public
      function ObterEmprestimos: TObjectList <TEmprestimoModel>;
-     function ObterEmprestimosFiltroLivro(pIdLivro: string; pStatus: string): TObjectList <TEmprestimoModel>;
+     function ObterEmprestimosFiltroLivro(pIdLivro: string): TObjectList <TEmprestimoModel>;
      procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel);
-     procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-     procedure RenovarLivro(pEmprestimo: TEmprestimoModel);
      procedure Excluir (pId: integer);
 
  end;
@@ -59,13 +55,14 @@ begin
 end;
 
 function TEmprestimoRepository.ObterEmprestimosFiltroLivro(
-  pIdLivro: string; pStatus: string): TObjectList<TEmprestimoModel>;
+  pIdLivro: string): TObjectList<TEmprestimoModel>;
 begin
   try
     Result := TObjectList<TEmprestimoModel>.Create;
 
+    dtmPrincipal.FDTEmprestimo.Filter := 'id_livro =''' + pIdLivro + '''';
+
     dtmPrincipal.FDTEmprestimo.Filtered := true;
-    dtmPrincipal.FDTEmprestimo.Filter := Format('id_livro = Emp AND status = ''%s''', [pIdLivro]);
 
     dtmPrincipal.FDTEmprestimo.First;
 
@@ -93,10 +90,6 @@ end;
 
 procedure TEmprestimoRepository.RealizarEmprestimo(pEmprestimo: TEmprestimoModel);
 begin
-
-    if dtmPrincipal.FDTEmprestimo.Locate('id', pEmprestimo.id, []) then
-      dtmPrincipal.FDTEmprestimo.Edit
-    else
     dtmPrincipal.FDTEmprestimo.Append;
 
     dtmPrincipal.FDTEmprestimoid_livro.AsInteger := pEmprestimo.IdLivro;
@@ -105,42 +98,6 @@ begin
     dtmPrincipal.FDTEmprestimodata_emprestimo.AsDateTime := pEmprestimo.DataEmprestimo;
     dtmPrincipal.FDTEmprestimodata_prevista_devolucao.AsDateTime := pEmprestimo.DataPrevistaDevolucao;
     dtmPrincipal.FDTEmprestimostatus.AsString := pEmprestimo.Status;
-
-    pEmprestimo.id := dtmPrincipal.FDTEmprestimoid.AsInteger;
-
-    dtmPrincipal.FDTEmprestimo.Post;
-end;
-
-procedure TEmprestimoRepository.RenovarLivro(pEmprestimo: TEmprestimoModel);
-begin
-    dtmPrincipal.FDTEmprestimo.Locate('id', pEmprestimo.Id, []);
-
-    dtmPrincipal.FDTEmprestimo.Edit;
-
-    dtmPrincipal.FDTEmprestimoid_livro.AsInteger := pEmprestimo.IdLivro;
-    dtmPrincipal.FDTEmprestimoid_cliente.AsInteger := pEmprestimo.IdCliente;
-    dtmPrincipal.FDTEmprestimodata_devolucao.AsDateTime := pEmprestimo.DataDevolucao;
-    dtmPrincipal.FDTEmprestimodata_emprestimo.AsDateTime := pEmprestimo.DataEmprestimo;
-    dtmPrincipal.FDTEmprestimodata_prevista_devolucao.AsDateTime := pEmprestimo.DataPrevistaDevolucao;
-    dtmPrincipal.FDTEmprestimostatus.AsString := pEmprestimo.Status;
-
-    pEmprestimo.id := dtmPrincipal.FDTEmprestimoid.AsInteger;
-
-    dtmPrincipal.FDTEmprestimo.Post;
-end;
-
-procedure TEmprestimoRepository.DevolverLivro(pEmprestimo: TEmprestimoModel);
-begin
-    dtmPrincipal.FDTEmprestimo.Locate('id', pEmprestimo.Id, []);
-
-    dtmPrincipal.FDTEmprestimo.Edit;
-
-    dtmPrincipal.FDTEmprestimoid_livro.AsInteger := pEmprestimo.IdLivro;
-    dtmPrincipal.FDTEmprestimoid_cliente.AsInteger := pEmprestimo.IdCliente;
-    dtmPrincipal.FDTEmprestimodata_devolucao.AsDateTime := pEmprestimo.DataDevolucao;
-    dtmPrincipal.FDTEmprestimodata_emprestimo.AsDateTime := pEmprestimo.DataEmprestimo;
-    dtmPrincipal.FDTEmprestimodata_prevista_devolucao.AsDateTime := pEmprestimo.DataPrevistaDevolucao;
-    dtmPrincipal.FDTEmprestimostatus.AsString := 'Devolvido';
 
     pEmprestimo.id := dtmPrincipal.FDTEmprestimoid.AsInteger;
 

@@ -11,7 +11,6 @@ type
  IClienteRepository = interface
 
    function ObterClientes: TObjectList <TClienteModel>;
-   function ObterClienteId(pId: integer): TClienteModel;
    procedure Salvar (Cliente: TClienteModel);
    procedure Excluir (id: integer);
  end;
@@ -19,7 +18,6 @@ type
  TClienteRepository = class (TInterfacedObject, IClienteRepository)
    public
      function ObterClientes: TObjectList <TClienteModel>;
-     function ObterClienteId(pId: integer): TClienteModel;
      procedure Salvar (Cliente: TClienteModel);
      procedure Excluir (id: integer);
 
@@ -27,23 +25,7 @@ type
 
 implementation
 
-function TClienteRepository.ObterClienteId(
-  pId: integer): TClienteModel;
-begin
-  dtmPrincipal.FDTCliente.Locate('id', pId, []);
-
-  var Cliente := TClienteModel.Create;
-
-  Cliente.id := dtmPrincipal.FDTClienteid.AsInteger;
-  Cliente.Nome := dtmPrincipal.FDTClientenome.AsString;
-  Cliente.Cpf := dtmPrincipal.FDTClientecpf.AsString;
-  Cliente.Telefone := dtmPrincipal.FDTClientetelefone.AsString;
-  Cliente.Email := dtmPrincipal.FDTClienteemail.AsString;
-
-  Result := Cliente;
-end;
-
-function TClienteRepository.ObterClientes: TObjectList <TClienteModel>;
+  function TClienteRepository.ObterClientes: TObjectList <TClienteModel>;
   begin
     Result := TObjectList<TClienteModel>.Create;
 

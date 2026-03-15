@@ -50,7 +50,7 @@ begin
     for var Emprestimo in Emprestimos do
     begin
       var Cliente := FServiceCliente.ObterClienteId(Emprestimo.IdCliente);
-      pLista.AddItem(' Cliente: ' + Cliente.Nome + ' Entrega: ' + DateToStr(Emprestimo.DataPrevistaDevolucao),Emprestimo);
+      pLista.AddItem(' Cliente: ' + Cliente.Nome + ' Entrega: ' + DateToStr(Emprestimo.DataEmprestimo),Emprestimo);
     end;
 
   except

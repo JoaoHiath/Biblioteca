@@ -4,7 +4,7 @@ interface
 
 uses
 
-  System.Classes, Controller.Emprestimo, Factory.Cliente,Service.Emprestimo, Repository.Emprestimo, ListaEmprestimos;
+  System.Classes, Controller.Emprestimo, Service.Emprestimo, Repository.Emprestimo, ListaEmprestimos;
 
 type
 
@@ -23,9 +23,8 @@ class function TEmprestimoFactory.criarController(
   owner:  TComponent): TEmprestimoController;
 begin
   var Service:= CriarService;
-  var Servicecliente := TClienteFactory.criarService;
 
-  Result := TEmprestimoController.Create(owner, service, Servicecliente);
+  Result := TEmprestimoController.Create(owner, service);
 end;
 
 class function TEmprestimoFactory.criarRepository: IEmprestimoRepository;

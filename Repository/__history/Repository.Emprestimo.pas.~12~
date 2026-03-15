@@ -13,8 +13,6 @@ type
    function ObterEmprestimos: TObjectList <TEmprestimoModel>;
    procedure RealizarEmprestimo (Emprestimo: TEmprestimoModel);
    function ObterEmprestimosFiltroLivro(pIdLivro: string; pStatus: string): TObjectList <TEmprestimoModel>;
-   procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-   procedure RenovarLivro(pEmprestimo: TEmprestimoModel);
    procedure Excluir (id: integer);
  end;
 
@@ -23,8 +21,6 @@ type
      function ObterEmprestimos: TObjectList <TEmprestimoModel>;
      function ObterEmprestimosFiltroLivro(pIdLivro: string; pStatus: string): TObjectList <TEmprestimoModel>;
      procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel);
-     procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-     procedure RenovarLivro(pEmprestimo: TEmprestimoModel);
      procedure Excluir (pId: integer);
 
  end;
@@ -65,7 +61,8 @@ begin
     Result := TObjectList<TEmprestimoModel>.Create;
 
     dtmPrincipal.FDTEmprestimo.Filtered := true;
-    dtmPrincipal.FDTEmprestimo.Filter := Format('id_livro = Emp AND status = ''%s''', [pIdLivro]);
+    dtmPrincipal.FDTEmprestimo.Filter :=
+      Format('id_livro = %s AND status = ''%s''', [pIdLivro, pStatus]);
 
     dtmPrincipal.FDTEmprestimo.First;
 
@@ -93,10 +90,6 @@ end;
 
 procedure TEmprestimoRepository.RealizarEmprestimo(pEmprestimo: TEmprestimoModel);
 begin
-
-    if dtmPrincipal.FDTEmprestimo.Locate('id', pEmprestimo.id, []) then
-      dtmPrincipal.FDTEmprestimo.Edit
-    else
     dtmPrincipal.FDTEmprestimo.Append;
 
     dtmPrincipal.FDTEmprestimoid_livro.AsInteger := pEmprestimo.IdLivro;
@@ -105,42 +98,6 @@ begin
     dtmPrincipal.FDTEmprestimodata_emprestimo.AsDateTime := pEmprestimo.DataEmprestimo;
     dtmPrincipal.FDTEmprestimodata_prevista_devolucao.AsDateTime := pEmprestimo.DataPrevistaDevolucao;
     dtmPrincipal.FDTEmprestimostatus.AsString := pEmprestimo.Status;
-
-    pEmprestimo.id := dtmPrincipal.FDTEmprestimoid.AsInteger;
-
-    dtmPrincipal.FDTEmprestimo.Post;
-end;
-
-procedure TEmprestimoRepository.RenovarLivro(pEmprestimo: TEmprestimoModel);
-begin
-    dtmPrincipal.FDTEmprestimo.Locate('id', pEmprestimo.Id, []);
-
-    dtmPrincipal.FDTEmprestimo.Edit;
-
-    dtmPrincipal.FDTEmprestimoid_livro.AsInteger := pEmprestimo.IdLivro;
-    dtmPrincipal.FDTEmprestimoid_cliente.AsInteger := pEmprestimo.IdCliente;
-    dtmPrincipal.FDTEmprestimodata_devolucao.AsDateTime := pEmprestimo.DataDevolucao;
-    dtmPrincipal.FDTEmprestimodata_emprestimo.AsDateTime := pEmprestimo.DataEmprestimo;
-    dtmPrincipal.FDTEmprestimodata_prevista_devolucao.AsDateTime := pEmprestimo.DataPrevistaDevolucao;
-    dtmPrincipal.FDTEmprestimostatus.AsString := pEmprestimo.Status;
-
-    pEmprestimo.id := dtmPrincipal.FDTEmprestimoid.AsInteger;
-
-    dtmPrincipal.FDTEmprestimo.Post;
-end;
-
-procedure TEmprestimoRepository.DevolverLivro(pEmprestimo: TEmprestimoModel);
-begin
-    dtmPrincipal.FDTEmprestimo.Locate('id', pEmprestimo.Id, []);
-
-    dtmPrincipal.FDTEmprestimo.Edit;
-
-    dtmPrincipal.FDTEmprestimoid_livro.AsInteger := pEmprestimo.IdLivro;
-    dtmPrincipal.FDTEmprestimoid_cliente.AsInteger := pEmprestimo.IdCliente;
-    dtmPrincipal.FDTEmprestimodata_devolucao.AsDateTime := pEmprestimo.DataDevolucao;
-    dtmPrincipal.FDTEmprestimodata_emprestimo.AsDateTime := pEmprestimo.DataEmprestimo;
-    dtmPrincipal.FDTEmprestimodata_prevista_devolucao.AsDateTime := pEmprestimo.DataPrevistaDevolucao;
-    dtmPrincipal.FDTEmprestimostatus.AsString := 'Devolvido';
 
     pEmprestimo.id := dtmPrincipal.FDTEmprestimoid.AsInteger;
 
