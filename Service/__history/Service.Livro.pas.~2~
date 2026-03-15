@@ -1,0 +1,28 @@
+unit Service.Livro;
+
+interface
+
+uses
+  System.SysUtils,
+  Generics.Collections,Model.Livro, Repository.Cliente;
+
+type
+
+ ILivroRepository = interface
+
+   function Obterlivros: TObjectList <TLivroModel>;
+   procedure Salvar (Cliente: TLivroModel);
+   procedure Excluir (id: integer);
+ end;
+
+ TLivroRepository = class (TInterfacedObject, ILivroRepository)
+   public
+     function Obterlivros: TObjectList <TLivroModel>;
+     procedure Salvar (Livro: TLivroModel);
+     procedure Excluir (id: integer);
+
+ end;
+
+implementation
+
+end.

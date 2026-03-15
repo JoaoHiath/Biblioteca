@@ -59,10 +59,8 @@ begin
     raise Exception.Create('Preencha a categoria do livro.');
   if Livro.QuantidadeTotal = 0 then
     raise Exception.Create('Preencha a quantidade total de exemplares do livro.');
-  if Livro.QuantidadeDisponivel < 0 then
+  if Livro.QuantidadeDisponivel = 0 then
     raise Exception.Create('Preencha a quantidade disponível de exemplares do livro.');
-  if livro.QuantidadeTotal < livro.QuantidadeDisponivel then
-    raise Exception.Create('A quantidade total de livros não pode ser menor do que a quantidade disponível.');
 end;
 
 procedure TLivroService.Excluir(id: integer);

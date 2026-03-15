@@ -11,10 +11,8 @@ type
  IEmprestimoService = interface
 
    function ObterEmprestimo: TObjectList <TEmprestimoModel>;
-   function ObterEmprestimosFiltroLivro(pIdLivro: string; pStatus: string): TObjectList <TEmprestimoModel>;
+   function ObterEmprestimosFiltroLivro(pIdLivro: string): TObjectList <TEmprestimoModel>;
    procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
-   procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-   procedure RenovarLivro(pEmprestimo: TEmprestimoModel);
    procedure Excluir (id: integer);
  end;
 
@@ -28,10 +26,8 @@ type
    public
      constructor Create(pEmprestimoRepository: IEmprestimoRepository);
      function ObterEmprestimo: TObjectList <TEmprestimoModel>;
-     function ObterEmprestimosFiltroLivro(pIdLivro: string; pStatus: string): TObjectList <TEmprestimoModel>;
+     function ObterEmprestimosFiltroLivro(pIdLivro: string): TObjectList <TEmprestimoModel>;
      procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
-     procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-     procedure RenovarLivro(pEmprestimo: TEmprestimoModel);
      procedure Excluir (id: integer);
  end;
 
@@ -43,7 +39,7 @@ constructor TEmprestimoService.Create(pEmprestimoRepository: IEmprestimoReposito
 begin
   FRepositoryEmprestimo := pEmprestimoRepository;
   FRepositoryLivro := TLivroRepository.Create;
-  FServiceLivro := TLivroService.Create(FRepositoryLivro);;
+  FServiceLivro := FServiceLivro.Create(FRepositoryLivro);;
 end;
 
 function TEmprestimoService.ObterEmprestimo: TObjectList<TEmprestimoModel>;
@@ -52,9 +48,9 @@ begin
 end;
 
 function TEmprestimoService.ObterEmprestimosFiltroLivro(
-  pIdLivro: string; pStatus: string): TObjectList<TEmprestimoModel>;
+  pIdLivro: string): TObjectList<TEmprestimoModel>;
 begin
-  Result := FRepositoryEmprestimo.ObterEmprestimosFiltroLivro(pIdLivro, pStatus);
+  Result := FRepositoryEmprestimo.ObterEmprestimosFiltroLivro(pIdLivro);
 end;
 
 procedure TEmprestimoService.RealizarEmprestimo(pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
@@ -64,22 +60,6 @@ begin
   pLivro.QuantidadeDisponivel := pLivro.QuantidadeDisponivel - 1;
   FServiceLivro.Salvar(pLivro);
   FRepositoryEmprestimo.RealizarEmprestimo(pEmprestimo);
-end;
-
-procedure TEmprestimoService.RenovarLivro(pEmprestimo: TEmprestimoModel);
-begin
-  Validar(pEmprestimo);
-
-  FRepositoryEmprestimo.RenovarLivro(pEmprestimo);
-end;
-
-procedure TEmprestimoService.DevolverLivro(pEmprestimo: TEmprestimoModel);
-begin
-  Validar(pEmprestimo);
-  if pEmprestimo.DataDevolucao < pEmprestimo.DataEmprestimo then
-    raise Exception.Create('A data de devolução não pode ser anterior a data de empréstimo');
-
-  FRepositoryEmprestimo.DevolverLivro(pEmprestimo);
 end;
 
 procedure TEmprestimoService.Excluir(id: integer);
@@ -97,8 +77,6 @@ begin
     raise Exception.Create('Preencha a data de quando o livro foi  emprestado.');
   if pEmprestimo.DataPrevistaDevolucao = 0 then
     raise Exception.Create('Informe para qual data o livro deve ser devolvido.');
-  if pEmprestimo.DataEmprestimo > pEmprestimo.DataPrevistaDevolucao then
-    raise Exception.Create('A data de prevista de devolução não pode ser anterior a data de empréstimo.');
 end;
 
 end.

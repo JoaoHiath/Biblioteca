@@ -14,7 +14,6 @@ type
    function ObterEmprestimosFiltroLivro(pIdLivro: string; pStatus: string): TObjectList <TEmprestimoModel>;
    procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
    procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-   procedure RenovarLivro(pEmprestimo: TEmprestimoModel);
    procedure Excluir (id: integer);
  end;
 
@@ -31,7 +30,6 @@ type
      function ObterEmprestimosFiltroLivro(pIdLivro: string; pStatus: string): TObjectList <TEmprestimoModel>;
      procedure RealizarEmprestimo (pEmprestimo: TEmprestimoModel; pLivro: TLivroModel);
      procedure DevolverLivro(pEmprestimo: TEmprestimoModel);
-     procedure RenovarLivro(pEmprestimo: TEmprestimoModel);
      procedure Excluir (id: integer);
  end;
 
@@ -66,18 +64,9 @@ begin
   FRepositoryEmprestimo.RealizarEmprestimo(pEmprestimo);
 end;
 
-procedure TEmprestimoService.RenovarLivro(pEmprestimo: TEmprestimoModel);
-begin
-  Validar(pEmprestimo);
-
-  FRepositoryEmprestimo.RenovarLivro(pEmprestimo);
-end;
-
 procedure TEmprestimoService.DevolverLivro(pEmprestimo: TEmprestimoModel);
 begin
   Validar(pEmprestimo);
-  if pEmprestimo.DataDevolucao < pEmprestimo.DataEmprestimo then
-    raise Exception.Create('A data de devolução não pode ser anterior a data de empréstimo');
 
   FRepositoryEmprestimo.DevolverLivro(pEmprestimo);
 end;
@@ -99,6 +88,8 @@ begin
     raise Exception.Create('Informe para qual data o livro deve ser devolvido.');
   if pEmprestimo.DataEmprestimo > pEmprestimo.DataPrevistaDevolucao then
     raise Exception.Create('A data de prevista de devolução não pode ser anterior a data de empréstimo.');
+  if pEmprestimo.DataEmprestimo > pEmprestimo.DataDevolucao then
+    raise Exception.Create('A data de devolução não pode ser anterior a data de empréstimo');
 end;
 
 end.

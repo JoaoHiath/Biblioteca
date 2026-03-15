@@ -11,7 +11,6 @@ type
  IClienteService = interface
 
    function ObterClientes: TObjectList <TClienteModel>;
-   function ObterClienteId(pId: integer): TClienteModel;
    procedure Salvar (Cliente: TClienteModel);
    procedure Excluir (id: integer);
  end;
@@ -26,7 +25,6 @@ type
 
      constructor Create(repository: IClienteRepository);
      function ObterClientes: TObjectList <TClienteModel>;
-     function ObterClienteId(pId: integer): TClienteModel;
      procedure Salvar (Cliente: TClienteModel);
      procedure Excluir (id: integer);
 
@@ -40,12 +38,7 @@ implementation
     FRepository := repository;
   end;
 
-  function TClienteService.ObterClienteId(pId: integer): TClienteModel;
-begin
-  Result:= FRepository.ObterClienteId(pId);
-end;
-
-function TClienteService.ObterClientes: TObjectList <TClienteModel>;
+  function TClienteService.ObterClientes: TObjectList <TClienteModel>;
   begin
     Result := FRepository.ObterClientes;
   end;
