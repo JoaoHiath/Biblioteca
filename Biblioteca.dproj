@@ -123,22 +123,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="view\TelaPrincipal.pas">
-            <Form>frmTelaPrincipal</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="view\ListaLivros.pas">
-            <Form>frmListaLivros</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="view\CadastroLivro.pas">
-            <Form>frmCadastroLivro</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="view\CadastroCliente.pas">
-            <Form>frmCadastroCliente</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Model\Model.Livro.pas"/>
         <DCCReference Include="Model\Model.Cliente.pas"/>
         <DCCReference Include="Model\Model.Emprestimo.pas"/>
@@ -153,22 +137,22 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="view\ListaClientes.pas">
-            <Form>frmListaClientes</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="view\ListaEmprestimos.pas">
-            <Form>frmListaEmprestimos</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Controller\Controller.Cliente.pas"/>
         <DCCReference Include="Factory\Factory.Cliente.pas"/>
         <DCCReference Include="Controller\Controller.Livro.pas"/>
         <DCCReference Include="Factory\Factory.Livro.pas"/>
         <DCCReference Include="Controller\Controller.Emprestimo.pas"/>
         <DCCReference Include="Factory\Factory.Emprestimo.pas"/>
-        <DCCReference Include="view\CadastroEmprestimo.pas">
-            <Form>frmCadastroEmprestimo</Form>
+        <DCCReference Include="view\CadastrarLivro.pas">
+            <Form>frmCadastrarLivro</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="view\CadastrarLocacao.pas">
+            <Form>frmCadastrarLocacao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="view\CadastrarLocatario.pas">
+            <Form>frmCadastrarLocatario</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="view\DataDevolucao.pas">
@@ -177,6 +161,10 @@
         </DCCReference>
         <DCCReference Include="view\DataRenovacao.pas">
             <Form>frmRenovacao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="view\TelaPrincipalNew.pas">
+            <Form>frmTelaPrincipalNew</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

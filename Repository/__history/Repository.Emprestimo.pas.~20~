@@ -65,7 +65,7 @@ begin
     Result := TObjectList<TEmprestimoModel>.Create;
 
     dtmPrincipal.FDTEmprestimo.Filtered := true;
-    dtmPrincipal.FDTEmprestimo.Filter := Format('id_livro = %s AND status = ''%s''', [pIdLivro, pStatus]);
+    dtmPrincipal.FDTEmprestimo.Filter := Format('id_livro = Emp AND status = ''%s''', [pIdLivro]);
 
     dtmPrincipal.FDTEmprestimo.First;
 
